@@ -12,6 +12,7 @@ export default class Navbar extends React.Component {
                     </div>
                     <ul class="nav navbar-nav navbar-right">
                         <li><Link to="/newPoll"><span class="glyphicon glyphicon-plus"></span> New Poll</Link></li>
+                        <li><Link to="/login"><span class="glyphicons glyphicons-user"></span>Login</Link></li>
                     </ul>
                 </div>
             </nav>

@@ -4,6 +4,13 @@ body {
     color: floralwhite;
 }
 
+a{
+    cursor: pointer;
+}
+a:hover{
+    text-decoration: underline;
+}
+
 .form-control, .form-control:focus{
     background: transparent;
     color: floralwhite;
@@ -13,8 +20,16 @@ body {
     padding-bottom: 10px;
 }
 
+.btn {
+    margin: 10px;
+}
+
 .btn-default {
     border: 1px solid rgba(200, 200, 200, 0.8);
+}
+.btn-danger{
+    background: transparent;
+    border: 1px solid rgba(200, 0, 0, 0.8);
 }
 
 .well {

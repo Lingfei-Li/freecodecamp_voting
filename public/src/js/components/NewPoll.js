@@ -31,7 +31,7 @@ export default class NewPoll extends React.Component {
             .map((optionTitle)=> {
                 var option = {
                     title: optionTitle.trim(),
-                    vote: 0
+                    vote: []
                 };
                 return option;
             });
