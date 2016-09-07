@@ -11,7 +11,7 @@ require('dotenv').config();
 
 var app = express();
 
-mongoose.connect(process.env.MONGO_ENDPOINT_DEBUG);
+mongoose.connect(process.env.MONGO_ENDPOINT);
 
 
 app.set('port', (process.env.PORT || 1235));

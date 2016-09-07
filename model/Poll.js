@@ -45,7 +45,6 @@ module.exports.voteOption = (_id, option_id, userId, callback) => {
                 return;
             }
         };
-        console.log("adsasldksj");
         options.forEach((option)=>{
             if(option._id == option_id) {
                 option.vote.push(userId);
