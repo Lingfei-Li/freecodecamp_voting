@@ -1,5 +1,5 @@
 // var debug = process.env.NODE_ENV !== "production";
-var debug = true;
+var debug = false;
 var webpack = require('webpack');
 var path = require('path');
 

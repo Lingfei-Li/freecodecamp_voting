@@ -31,10 +31,10 @@ export default class Polls extends React.Component {
         const pollsComponent = this.state.polls.map((poll)=>{
             var totalVote = poll.options.reduce((previousValue, option)=>{
                 return previousValue+option.vote.length;
-            }, 0.1);
+            }, 0);
             
             var rd3_data = poll.options.map((option)=>{
-                return {label:option.title, value: (option.vote.length/(totalVote)).toFixed(1)};
+                return {label:option.title, value: (totalVote===0)?0:(option.vote.length/(totalVote)).toFixed(1)*100};
             });
             
             return (

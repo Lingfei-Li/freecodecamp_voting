@@ -1,6 +1,7 @@
 import React from "react"
 import * as axios from "axios"
 import cookie from "react-cookie"
+import rd3 from "react-d3"
 
 export default class ViewPoll extends React.Component {
     constructor() {
@@ -12,7 +13,7 @@ export default class ViewPoll extends React.Component {
             }
         };
     }
-    
+
     componentDidMount() {
         const _id = this.props.params._id;
         this.loadPoll(_id);
@@ -37,8 +38,12 @@ export default class ViewPoll extends React.Component {
     }
     
     vote(option_id) {
-        const userId = cookie.load("userId")
-        console.log(userId);
+        const userId = cookie.load("userId");
+        console.log("userId:" + userId);
+        if(userId === undefined) {
+            alert("Please login");
+            return;
+        }
         axios.put(`api/polls/${this.state.poll._id}/${option_id}/${userId}`)
             .then(()=> {
                 this.loadPoll(this.state.poll._id);
@@ -63,21 +68,45 @@ export default class ViewPoll extends React.Component {
             return (
                 <li key={option._id}>
                     <a onClick={()=>{this.vote(option._id)}}>
-                        <span>{option.title}: </span>
-                        <span>{JSON.stringify(option.vote)}</span>
+                        <span>{option.title}</span>
+                        {/*<span>{JSON.stringify(option.vote)}</span>*/}
                     </a>
                 </li>
             );
         });
-        
+
+        var totalVote = this.state.poll.options.reduce((previousValue, option)=>{
+            return previousValue+option.vote.length;
+        }, 0);
+
+        var rd3_data = this.state.poll.options.map((option)=>{
+            return {label:option.title, value: (totalVote===0)?0:(option.vote.length/(totalVote)).toFixed(1)*100};
+        });
+
         return (
             <div id="poll">
                 <h2>
                     {this.state.poll.title}
                 </h2>
-                <ul>
-                    {optionsComponents}
-                </ul>
+                <div className="row">
+                    <div className="col-xs-4">
+                        <ul>
+                            {optionsComponents}
+                        </ul>
+                    </div>
+                    <div className="col-xs-8">
+                        <rd3.PieChart
+                            data={rd3_data}
+                            width={200}
+                            height={200}
+                            radius={50}
+                            innerRadius={20}
+                            sectorBorderColor="white"
+                            title=""
+                        />
+                    </div>
+
+                </div>
                 <button class="btn btn-default btn-sm" onClick={this.editPoll.bind(this)}>Edit</button>
                 <button class="btn btn-danger btn-sm" onClick={this.deletePoll.bind(this)}>Delete</button>
             </div>
